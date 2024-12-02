@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import config from '@/config';
 import { DatabaseModule } from '@/shared/database/database.module';
 import { UserModule } from '@/modules/user/user.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { TransformInterceptor } from '@/common/interceptors/transform.interceptor';
 
 @Module({
   imports: [
@@ -29,6 +31,13 @@ import { UserModule } from '@/modules/user/user.module';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      /* 全局拦截器 */
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
+    },
+  ],
 })
 export class AppModule {}

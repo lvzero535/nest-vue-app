@@ -17,6 +17,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "preserve",
+    "jsxFactory": "h",
 
     /* Linting */
     "strict": true,

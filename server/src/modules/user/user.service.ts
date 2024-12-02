@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserDto } from './user.dto';
@@ -15,10 +15,40 @@ export class UserService {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
-  findAllUsers(): Promise<UserEntity[]> {
-    return this.usersRepository.find();
+  async findAllUsers({
+    page,
+    pageSize,
+    search,
+  }): Promise<{ list: UserEntity[]; total: number }> {
+    const queryBuilder = this.usersRepository
+      .createQueryBuilder('user')
+      .where({
+        username: Like(`%${search}%`),
+      })
+      .orderBy('user.createAt', 'DESC')
+      .skip((page - 1) * pageSize)
+      .take(pageSize);
+
+    const [list, total] = await queryBuilder.getManyAndCount();
+    return {
+      list,
+      total,
+    };
   }
   create(userDto: UserDto) {
     return this.usersRepository.save(userDto);
+  }
+  delete(id: number) {
+    return this.usersRepository.delete(id);
+  }
+  update(id: string, userDto: UserDto) {
+    // const user = this.findOne(id);
+    return this.usersRepository.update(id, {
+      // ...user,
+      ...userDto,
+    });
+  }
+  findOne(id: string) {
+    return this.usersRepository.findOneBy({ id });
   }
 }
