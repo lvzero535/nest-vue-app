@@ -1,6 +1,6 @@
-import { Router } from "vue-router";
-import { getRouteByPath } from "../helper";
-import { useTabsStore } from "@/store/modules/tabs";
+import { Router } from 'vue-router';
+import { getRouteByPath } from '../helper';
+import { useTabsStore } from '@/store/modules/tabs';
 
 export default function pageGuard(router: Router) {
   const tabsStore = useTabsStore();
@@ -9,5 +9,5 @@ export default function pageGuard(router: Router) {
     if (!route?.children.length) {
       tabsStore.addTabs(to.path);
     }
-  })
+  });
 }

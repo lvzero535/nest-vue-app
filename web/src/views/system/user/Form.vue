@@ -8,20 +8,13 @@
     :labelCol="{ span: 4 }"
     autocomplete="off"
   >
-    <Form.Item
-      label="用户名"
-      name="username"
-    >
+    <Form.Item label="用户名" name="username">
       <Input v-model:value="formState.username" />
     </Form.Item>
 
-    <Form.Item
-      label="密码"
-      name="password"
-    >
+    <Form.Item label="密码" name="password">
       <InputPassword v-model:value="formState.password" />
     </Form.Item>
-
   </Form>
 </template>
 <script lang="ts" setup>
@@ -33,8 +26,8 @@ import { addUser, updateUser, UserFormModel, UserModel } from '@/api/user';
 const props = defineProps({
   userInfo: {
     type: Object as PropType<UserModel>,
-    default: () => null
-  }
+    default: () => null,
+  },
 });
 
 const formRef = ref<FormInstance>();
@@ -45,12 +38,8 @@ const formState = reactive<UserFormModel>({
 });
 
 const rules: Record<keyof UserFormModel, Rule[]> = {
-  'username': [
-    { required: true, message: '请输入用户名', },
-  ],
-  'password': [
-    { required: true, message: '请输入密码', },
-  ]
+  username: [{ required: true, message: '请输入用户名' }],
+  password: [{ required: true, message: '请输入密码' }],
 };
 
 const onSubmit = async () => {
@@ -72,4 +61,3 @@ defineExpose({
   onSubmit,
 });
 </script>
-

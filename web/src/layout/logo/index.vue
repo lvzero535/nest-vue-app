@@ -9,9 +9,9 @@ import { Icon } from '@/components/icon';
 defineProps({
   hideText: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 </script>
 <style lang="less" scoped>
 .app-logo-wrap {
@@ -26,5 +26,4 @@ defineProps({
     margin-left: 5px;
   }
 }
-
 </style>

@@ -1,8 +1,7 @@
-import { LdTableMethods } from "./types";
-import { ref } from "vue";
+import { LdTableMethods } from './types';
+import { ref } from 'vue';
 
 export function useTable() {
-
   const tableMethods = ref<LdTableMethods>();
 
   const register = (methods: LdTableMethods) => {
@@ -10,7 +9,7 @@ export function useTable() {
     if (!tableMethods) {
       console.error('methods is null');
     }
-  }
+  };
 
   const methods: LdTableMethods = {
     loadData: () => {
@@ -21,5 +20,5 @@ export function useTable() {
   return {
     register,
     ...methods,
-  }
+  };
 }

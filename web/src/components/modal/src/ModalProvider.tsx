@@ -1,9 +1,9 @@
-import { Modal, Spin, SpinProps } from "ant-design-vue";
-import { cloneVNode, defineComponent, isVNode, provide, shallowRef } from "vue";
-import { LdModalProvideRef, ModalExtra } from "./types";
-import { isFunction, isObject } from "lodash-es";
-import { LD_MODAL_PROVIDER_TOKEN } from "./token";
-import { uniqueId } from "@/utils/util";
+import { Modal, Spin, SpinProps } from 'ant-design-vue';
+import { cloneVNode, defineComponent, isVNode, provide, shallowRef } from 'vue';
+import { LdModalProvideRef, ModalExtra } from './types';
+import { isFunction, isObject } from 'lodash-es';
+import { LD_MODAL_PROVIDER_TOKEN } from './token';
+import { uniqueId } from '@/utils/util';
 
 export default defineComponent({
   name: 'LdModalProvider',
@@ -11,11 +11,12 @@ export default defineComponent({
     const modals = shallowRef<ModalExtra[]>([]);
 
     const getCurrentIndex = (props: ModalExtra) => {
-      return modals.value.findIndex(item => item.key === props.key || item.title === props.title);
-    }
+      return modals.value.findIndex(
+        (item) => item.key === props.key || item.title === props.title,
+      );
+    };
 
     const open = (props: ModalExtra) => {
-
       props._isConfirmLoading = !!props.confirmLoading;
       delete props.confirmLoading;
 
@@ -26,7 +27,7 @@ export default defineComponent({
         // undefined 也是 显示spin
         props._isSpin = props.spin !== false;
         props.spin = {
-          spinning: false
+          spinning: false,
         };
       }
 
@@ -41,8 +42,7 @@ export default defineComponent({
       }
 
       modals.value = tempModals;
-      
-    }
+    };
 
     const update = (props: ModalExtra) => {
       const currentIndex = getCurrentIndex(props);
@@ -51,24 +51,25 @@ export default defineComponent({
         tempModals[currentIndex] = { ...tempModals[currentIndex], ...props };
         modals.value = tempModals;
       }
-    }
+    };
 
     const apis: LdModalProvideRef = {
       open,
       update,
-    }
+    };
 
     provide(LD_MODAL_PROVIDER_TOKEN, apis);
     expose(apis);
 
-
     return () => {
-      const modalList = modals.value.map(item => {
-
-        const { 
-          content, contentProps, onOk, _isConfirmLoading = false,
+      const modalList = modals.value.map((item) => {
+        const {
+          content,
+          contentProps,
+          onOk,
+          _isConfirmLoading = false,
           spin,
-          ...modalProps 
+          ...modalProps
         } = item;
 
         const spinProps = spin as SpinProps;
@@ -77,40 +78,55 @@ export default defineComponent({
 
         const updateOpen = (value: boolean) => {
           update({ ...item, open: value });
-        }
+        };
 
         const mergedModalProps = {
           'onUpdate:open': updateOpen,
           onOk: async (e: MouseEvent) => {
             item._isSpin && (spinProps.spinning = true);
-            _isConfirmLoading && update({...item, spin: spinProps, confirmLoading: true });
+            _isConfirmLoading &&
+              update({ ...item, spin: spinProps, confirmLoading: true });
 
             const result = await onOk?.(e);
 
             item._isSpin && (spinProps.spinning = false);
-            _isConfirmLoading && update({...item, spin: spinProps, confirmLoading: false });
+            _isConfirmLoading &&
+              update({ ...item, spin: spinProps, confirmLoading: false });
 
             if (result === true) {
               updateOpen(false);
             }
-          }
-        }
+          },
+        };
 
         const children = isFunction(content)
-                    ? content() 
-                    : isVNode(content) ? cloneVNode(content, contentProps) : content;
+          ? content()
+          : isVNode(content)
+            ? cloneVNode(content, contentProps)
+            : content;
 
-        return <Modal {...modalProps} {...mergedModalProps} destroyOnClose={destroyOnClose} open={open} >{{
-          default: () => <Spin {...spinProps}>{children}</Spin>,
-          title: () => {
-            return <>{item.title}</>;
-          }
-        }}</Modal>;
+        return (
+          <Modal
+            {...modalProps}
+            {...mergedModalProps}
+            destroyOnClose={destroyOnClose}
+            open={open}
+          >
+            {{
+              default: () => <Spin {...spinProps}>{children}</Spin>,
+              title: () => {
+                return <>{item.title}</>;
+              },
+            }}
+          </Modal>
+        );
       });
-      return <>
-        {slots.default?.()}
-        {modalList}
-      </>;
-    }
-  }
-})
+      return (
+        <>
+          {slots.default?.()}
+          {modalList}
+        </>
+      );
+    };
+  },
+});

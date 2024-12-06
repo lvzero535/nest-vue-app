@@ -2,31 +2,36 @@
   <div class="user-wrap">
     <LdTable @register="register" :columns="columns" :fetch="getUserData">
       <template #toolbar>
-        <Button @click="addUserHandler" type="primary" :icon="hIcon('ant-design:plus-outlined')">添加</Button>
+        <Button
+          @click="addUserHandler"
+          type="primary"
+          :icon="hIcon('ant-design:plus-outlined')"
+          >添加</Button
+        >
         <InputSearch
           v-model:value="searchContent"
-          style="width: 200px;"
+          style="width: 200px"
           placeholder="请输入用户名"
           :allow-clear="true"
           enter-button
-          @search="loadData" />
+          @search="loadData"
+        />
       </template>
 
       <template #bodyCell="{ column, value, record }">
-          <template v-if="column.dataIndex === 'username'">
-            <a @click="editUserHandler(record as UserModel)">{{ value }}</a>
-          </template>
-          <template v-if="column.dataIndex === 'options'">
-            <Popconfirm
-              title="确定删除用户？"
-              @confirm="onDelete(record as UserModel)"
-              >
-              <a>删除</a>
-            </Popconfirm>
-          </template>
+        <template v-if="column.dataIndex === 'username'">
+          <a @click="editUserHandler(record as UserModel)">{{ value }}</a>
+        </template>
+        <template v-if="column.dataIndex === 'options'">
+          <Popconfirm
+            title="确定删除用户？"
+            @confirm="onDelete(record as UserModel)"
+          >
+            <a>删除</a>
+          </Popconfirm>
+        </template>
       </template>
     </LdTable>
-
   </div>
 </template>
 <script lang="ts" setup>
@@ -67,22 +72,19 @@ const columns: TableProps['columns'] = [
 ];
 const searchContent = ref('');
 
-const {register, loadData }  = useTable();
+const { register, loadData } = useTable();
 
 const addUserHandler = () => {
   openUserModal('添加用户');
-}
+};
 const editUserHandler = async (userInfo: UserModel) => {
   const resp = await getUserById(userInfo.id!);
   if (resp.success) {
     openUserModal('编辑用户', resp.data);
   }
-}
+};
 
-const openUserModal = (
-  title: string,
-  userInfo?: UserModel
-) => {
+const openUserModal = (title: string, userInfo?: UserModel) => {
   const formRef = ref<InstanceType<typeof Form>>();
   open({
     title,
@@ -98,17 +100,16 @@ const openUserModal = (
         loadData();
       }
       return result;
-    }
-  })
-}
-
+    },
+  });
+};
 
 const onDelete = async (record: UserModel) => {
   const resp = await deleteUser(record.id!);
   if (resp.success) {
     loadData();
   }
-}
+};
 
 async function getUserData(pageQuery: PageQuery) {
   const resp = await getUserList({
@@ -117,26 +118,28 @@ async function getUserData(pageQuery: PageQuery) {
   });
   return resp.data;
 }
-
 </script>
 <style lang="less" scoped>
 .user-wrap {
   height: 100%;
   display: flex;
   flex-direction: column;
+
   .table-wrap {
     height: calc(100% - 40px);
+
     .ant-table-wrapper {
       height: 100%;
 
       :deep(.ant-spin-nested-loading) {
         height: 100%;
+
         .ant-spin-container {
           height: 100%;
 
           .ant-table.ant-table-fixed-header {
             height: calc(100% - 64px); // 64px 为分页的高度
-            
+
             .ant-table-container {
               height: 100%;
 
@@ -151,10 +154,10 @@ async function getUserData(pageQuery: PageQuery) {
     }
   }
 }
+
 .toolbar-wrap {
   display: flex;
   justify-content: space-between;
   margin-bottom: 8px;
 }
 </style>
-

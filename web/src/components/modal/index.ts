@@ -11,6 +11,4 @@ export function useModal() {
   return LdModalProvider;
 }
 
-export {
-  LdModalProvider
-};
+export { LdModalProvider };

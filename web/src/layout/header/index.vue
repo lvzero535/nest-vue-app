@@ -1,11 +1,22 @@
 <template>
   <div class="app-header-wrap">
     <div class="header-left-wrap">
-
       <!-- 折叠按钮 -->
       <div class="toggle-collapsed-wrap">
-        <Icon size="16" class="icon-cls" v-if="isCollapsed" @click="toggleCollapsed" icon="ant-design:menu-unfold-outlined" />
-        <Icon size="16" class="icon-cls" v-else @click="toggleCollapsed" icon="ant-design:menu-fold-outlined" />
+        <Icon
+          size="16"
+          class="icon-cls"
+          v-if="isCollapsed"
+          @click="toggleCollapsed"
+          icon="ant-design:menu-unfold-outlined"
+        />
+        <Icon
+          size="16"
+          class="icon-cls"
+          v-else
+          @click="toggleCollapsed"
+          icon="ant-design:menu-fold-outlined"
+        />
       </div>
 
       <div class="header-breadcrumb-wrap">
@@ -21,7 +32,11 @@
 
       <!-- 全屏 -->
       <div class="fullscreen-wrap ml-16">
-        <Icon class="icon-cls" size="16" icon="ant-design:fullscreen-outlined" />
+        <Icon
+          class="icon-cls"
+          size="16"
+          icon="ant-design:fullscreen-outlined"
+        />
       </div>
 
       <!-- 用户信息 -->
@@ -35,7 +50,11 @@
                 <span>个人中心</span>
               </Menu.Item>
               <Menu.Item key="2">
-                <Icon class="mr-4" size="16" :icon="'ant-design:logout-outlined'" />
+                <Icon
+                  class="mr-4"
+                  size="16"
+                  :icon="'ant-design:logout-outlined'"
+                />
                 <span>退出登录</span>
               </Menu.Item>
             </Menu>
@@ -48,8 +67,6 @@
         <Icon class="icon-cls" size="16" icon="ep:setting" />
       </div>
     </div>
-
-
   </div>
 </template>
 <script setup lang="ts">
@@ -71,15 +88,16 @@ const isCollapsed = computed(() => appStore.isCollapsed);
 
   .icon-cls {
     cursor: pointer;
+
     &:hover {
       color: #1890ff;
     }
   }
 
-  .header-right-wrap, .header-left-wrap {
+  .header-right-wrap,
+  .header-left-wrap {
     display: flex;
     align-items: center;
   }
-
 }
 </style>

@@ -11,11 +11,14 @@ export { Icon };
  * @param props - 传递给图标的额外属性
  * @returns 一个包含图标的 Vue 组件
  */
-export function hIcon(icon: DefaultIconsType, props: Record<string, unknown> = {}) {
+export function hIcon(
+  icon: DefaultIconsType,
+  props: Record<string, unknown> = {},
+) {
   // 使用 h 函数创建一个 Icon 组件实例
   return h(Icon, {
     // 解构赋值，合并传入的 props 和 icon 属性
-   ...props,
+    ...props,
     icon,
   });
 }

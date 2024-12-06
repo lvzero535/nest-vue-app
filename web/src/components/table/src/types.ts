@@ -10,4 +10,4 @@ export interface LdTableMethods {
 // 让 CustomTableColumn 继承类型别名
 export type CustomTableColumn = TableColumn & {
   hidden?: boolean;
-}
+};

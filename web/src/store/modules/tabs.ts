@@ -1,10 +1,10 @@
-import { defineStore } from "pinia";
-import { store } from "@/store";
-import { watch, ref } from "vue";
-import { RouteRecordRaw } from "vue-router";
-import { getRouteByPath } from "@/router/helper";
-import router from "@/router";
-import { welcome } from "@/router/routes/dashboard";
+import { defineStore } from 'pinia';
+import { store } from '@/store';
+import { watch, ref } from 'vue';
+import { RouteRecordRaw } from 'vue-router';
+import { getRouteByPath } from '@/router/helper';
+import router from '@/router';
+import { welcome } from '@/router/routes/dashboard';
 
 export enum TAB_ACTIONS {
   CLOSE_ALL = 'close-all',
@@ -13,32 +13,31 @@ export enum TAB_ACTIONS {
   CLOSE_RIGHT = 'close-right',
 }
 
-export const DisableCloseTab = [
-  welcome.path,
-];
+export const DisableCloseTab = [welcome.path];
 
 export const isDisableClose = (path: string) => {
   return DisableCloseTab.includes(path);
-}
+};
 
-export const useTabsStore = defineStore('tabs',
+export const useTabsStore = defineStore(
+  'tabs',
   () => {
-
     const tabsMap = ref<Map<string, RouteRecordRaw>>(new Map());
     const tabsKey = ref<string[]>([]);
 
-    watch(tabsMap, () => {
+    watch(
+      tabsMap,
+      () => {
         tabsKey.value = Array.from(tabsMap.value.keys());
-      }, 
+      },
       {
         /* 
           不加这个，监听不到对象的属性变化，导致tabsKey.value没有更新
           但是不加这个能监听到delete操作的变化
         */
         deep: true,
-      }
+      },
     );
-
 
     function closeTabs(action: TAB_ACTIONS, path: string) {
       const currentActiveRoutePath = router.currentRoute.value.path;
@@ -61,7 +60,7 @@ export const useTabsStore = defineStore('tabs',
           if (currentActiveRoutePath !== path) {
             router.push(path);
           }
-  
+
           break;
 
         case TAB_ACTIONS.CLOSE_LEFT:
@@ -99,13 +98,11 @@ export const useTabsStore = defineStore('tabs',
 
         default:
           console.log('action', action);
-
       }
     }
 
-
     function removeTabs(path: RouteRecordRaw | string) {
-      const key = typeof path ==='string'? path : path.path;
+      const key = typeof path === 'string' ? path : path.path;
       if (tabsMap.value.has(key)) {
         tabsMap.value.delete(key);
       }
@@ -116,14 +113,12 @@ export const useTabsStore = defineStore('tabs',
       if (tabsMap.value.has(key)) {
         return;
       }
-      const route = typeof path ==='string'? getRouteByPath(path) : path;
+      const route = typeof path === 'string' ? getRouteByPath(path) : path;
       if (!route) {
         return;
       }
       tabsMap.value.set(key, route);
-
     }
-
 
     return {
       tabsMap,
@@ -131,7 +126,7 @@ export const useTabsStore = defineStore('tabs',
       tabsKey,
       removeTabs,
       closeTabs,
-    }
+    };
   },
   {
     persist: {
@@ -142,14 +137,12 @@ export const useTabsStore = defineStore('tabs',
           return;
         }
         tabsKey.forEach((key: string) => {
-            context.store.addTabs(key);
-        })
-
-      }
-
-    }
-  }
-)
+          context.store.addTabs(key);
+        });
+      },
+    },
+  },
+);
 
 // 在组件的setup函数外使用
 export function useTabsStoreWithOut() {

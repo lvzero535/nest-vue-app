@@ -4,26 +4,32 @@
       <slot name="toolbar"></slot>
     </div>
     <div class="table-wrap" :class="{ 'no-toolbar': !isToolbar }">
-      <Table :scroll="{ y: 'max-content'}"
-            v-bind="$attrs"
-            :loading="loading"
-            :data-source="data"
-            :columns="tableColumns"
-            size="middle"
-            :pagination="pagination">
+      <Table
+        :scroll="{ y: 'max-content' }"
+        v-bind="$attrs"
+        :loading="loading"
+        :data-source="data"
+        :columns="tableColumns"
+        size="middle"
+        :pagination="pagination"
+      >
         <template #headerCell="{ column }">
           <template v-if="column.dataIndex === 'filterColumns'">
             <Dropdown>
               <Icon class="icon-cls" icon="ep:more" />
               <template #overlay>
                 <Menu>
-                  <template v-for="(item) in filterColumns" :key="item.dataIndex">
+                  <template v-for="item in filterColumns" :key="item.dataIndex">
                     <Menu.Item>
                       <Checkbox
                         :checked="!item.hidden"
-                        @change="(checked) => {
-                          item.hidden = !checked.target.checked;
-                        }">{{ item.title }}</Checkbox>
+                        @change="
+                          (checked) => {
+                            item.hidden = !checked.target.checked;
+                          }
+                        "
+                        >{{ item.title }}</Checkbox
+                      >
                     </Menu.Item>
                   </template>
                 </Menu>
@@ -32,7 +38,11 @@
           </template>
           <slot v-else name="headerCell" v-bind="column"></slot>
         </template>
-        <template v-for="(_, slotName) in omit($slots, ['toolbar', 'headerCell'])" :key="slotName" v-slot:[slotName]="values">
+        <template
+          v-for="(_, slotName) in omit($slots, ['toolbar', 'headerCell'])"
+          :key="slotName"
+          v-slot:[slotName]="values"
+        >
           <slot :name="slotName" v-bind="values"></slot>
         </template>
       </Table>
@@ -41,8 +51,16 @@
 </template>
 <script lang="ts" setup>
 import { Table, Dropdown, Menu, Checkbox } from 'ant-design-vue';
-import { Icon } from '@/components/icon'; 
-import { computed, onMounted, PropType, reactive, ref, useSlots, watchEffect } from 'vue';
+import { Icon } from '@/components/icon';
+import {
+  computed,
+  onMounted,
+  PropType,
+  reactive,
+  ref,
+  useSlots,
+  watchEffect,
+} from 'vue';
 import { ListResult, PageQuery } from '@/api/types';
 import { isFunction, noop, omit } from 'lodash-es';
 import { LdTableMethods, CustomTableColumn } from './types';
@@ -54,27 +72,30 @@ const props = defineProps({
   },
   fetch: {
     type: Function as PropType<(pageQuery: PageQuery) => Promise<ListResult>>,
-    default: null
+    default: null,
   },
   autoLoad: {
     type: Boolean,
-    default: true
+    default: true,
   },
   pagination: {
     type: Boolean,
-    default: true
+    default: true,
   },
   columns: {
     type: Array as PropType<CustomTableColumn[]>,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const emits = defineEmits<{
-  (e: 'change', pageQuery: {
-    page: number;
-    pageSize: number;
-  }): void;
+  (
+    e: 'change',
+    pageQuery: {
+      page: number;
+      pageSize: number;
+    },
+  ): void;
   (e: 'register', methods: LdTableMethods): void;
 }>();
 
@@ -89,24 +110,26 @@ const tableColumns = ref<CustomTableColumn[]>([]);
 const filterColumns = ref<CustomTableColumn[]>([]);
 
 watchEffect(() => {
-  filterColumns.value = props.columns?.map(item => {
+  filterColumns.value = props.columns?.map((item) => {
     return {
       hidden: false,
-     ...item,
-    }
+      ...item,
+    };
   });
 });
 
 watchEffect(() => {
-  tableColumns.value = filterColumns.value?.filter(item =>!item.hidden).concat([
+  tableColumns.value = filterColumns.value
+    ?.filter((item) => !item.hidden)
+    .concat([
       {
         title: 'filterColumns',
         dataIndex: 'filterColumns',
         width: 32,
         maxWidth: 32,
         fixed: 'right',
-      }
-  ]);
+      },
+    ]);
 });
 
 const isToolbar = computed(() => {
@@ -125,9 +148,9 @@ const pagination = computed(() => {
       pageQuery.pageSize = pageSize;
       emits('change', pageQuery);
       getTableData(pageQuery);
-    }
-  }
-})
+    },
+  };
+});
 
 async function getTableData(pageQuery: PageQuery) {
   loading.value = true;
@@ -146,15 +169,14 @@ onMounted(() => {
 emits('register', {
   loadData: () => {
     getTableData(pageQuery);
-  }
+  },
 });
 
 defineExpose({
   loadData: () => {
     getTableData(pageQuery);
-  }
-})
-
+  },
+});
 </script>
 <style lang="less" scoped>
 .ld-table-container {
@@ -164,7 +186,7 @@ defineExpose({
 
   .icon-cls:hover {
     cursor: pointer;
-    color: var(--primary-color)
+    color: var(--primary-color);
   }
 
   .toolbar-wrap {
@@ -179,17 +201,19 @@ defineExpose({
     &.no-toolbar {
       height: 100%;
     }
+
     .ant-table-wrapper {
       height: 100%;
 
       :deep(.ant-spin-nested-loading) {
         height: 100%;
+
         .ant-spin-container {
           height: 100%;
 
           .ant-table.ant-table-fixed-header {
             height: calc(100% - 56px); // 64px 为分页的高度
-            
+
             .ant-table-container {
               height: 100%;
 
@@ -206,4 +230,3 @@ defineExpose({
   }
 }
 </style>
-

@@ -1,11 +1,9 @@
-
-
 <template>
-    <ConfigProvider :locale="zhCN">
-        <LdModalProvider>
-            <RouterView />
-        </LdModalProvider>
-    </ConfigProvider>
+  <ConfigProvider :locale="zhCN">
+    <LdModalProvider>
+      <RouterView />
+    </LdModalProvider>
+  </ConfigProvider>
 </template>
 <script setup lang="ts">
 import { LdModalProvider } from '@/components/modal';

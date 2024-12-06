@@ -1,16 +1,17 @@
-import { defineStore } from "pinia";
-import { store } from "@/store";
-import { ref } from "vue";
-import { RouteRecordRaw } from "vue-router";
-import { rootRoute } from '@/router/routes'
+import { defineStore } from 'pinia';
+import { store } from '@/store';
+import { ref } from 'vue';
+import { RouteRecordRaw } from 'vue-router';
+import { rootRoute } from '@/router/routes';
 
-export const useUserStore = defineStore('user',
+export const useUserStore = defineStore(
+  'user',
   () => {
     const menus = ref<RouteRecordRaw[]>([]);
     const token = ref('');
 
     async function createMenus() {
-      menus.value = rootRoute.children!
+      menus.value = rootRoute.children!;
     }
     async function login() {
       token.value = 'token';
@@ -19,15 +20,15 @@ export const useUserStore = defineStore('user',
       menus,
       token,
       createMenus,
-      login
-    }
+      login,
+    };
   },
   {
     persist: {
-      pick: ['token']
-    }
-  }
-)
+      pick: ['token'],
+    },
+  },
+);
 
 // 在组件的setup函数外使用
 export function useUserStoreWithOut() {

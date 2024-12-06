@@ -1,6 +1,6 @@
 <template>
   <template v-if="menu.meta?.icon && showIcon">
-      <Icon class="mr-4" :icon="menu.meta.icon" :size="iconSize"/>
+    <Icon class="mr-4" :icon="menu.meta.icon" :size="iconSize" />
   </template>
   <span v-show="!hideText">
     {{ menu.meta?.title }}
@@ -14,24 +14,22 @@ import { Icon } from '@/components/icon';
 const props = defineProps({
   menu: {
     type: Object as PropType<RouteRecordRaw>,
-    default: () => ({})
+    default: () => ({}),
   },
   /* 当折叠时，第1级菜单隐藏文字 只显示 */
   hideText: {
     type: Boolean,
-    default: false
+    default: false,
   },
   /* 显示图标 */
   showIcon: {
     type: Boolean,
-    default: true
-  }
-})
+    default: true,
+  },
+});
 
 /* 菜单图标大小, 默认14px,隐藏文字时,图标变大 */
 const iconSize = computed(() => {
   return props.hideText ? 18 : 14;
 });
-
-
 </script>

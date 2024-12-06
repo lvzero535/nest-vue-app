@@ -9,10 +9,10 @@ onMounted(() => {
   const user = useUserStore();
   if (!user.token) {
     user.login().then(() => {
-      router.push({ path: '/'})
-    })
+      router.push({ path: '/' });
+    });
   } else {
-    router.push({ path: '/'});
+    router.push({ path: '/' });
   }
-})
+});
 </script>

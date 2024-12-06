@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from "vue-router";
+import { RouteRecordRaw } from 'vue-router';
 
 export const demoItemsRoute: RouteRecordRaw = {
   path: '/demos/item',
@@ -35,8 +35,7 @@ export const demoItemsRoute: RouteRecordRaw = {
             title: 'item-1-2',
           },
         },
-      ]
-    }
-  ]
-}
-
+      ],
+    },
+  ],
+};

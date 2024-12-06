@@ -30,26 +30,23 @@ import { useAppStore } from '@/store/modules/app';
 
 const appStore = useAppStore();
 const isCollapsed = computed(() => appStore.isCollapsed);
-
 </script>
 <style lang="less" scoped>
 .app-layout {
   height: 100vh;
 
   .app-content-container {
-
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    
+
     .app-component-container {
       margin: 16px;
       padding: 16px;
       background: #fff;
       min-height: 280px;
       flex: 1;
-
     }
   }
 }

@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from 'axios';
 
 export interface BaseModel {
   id?: number;
@@ -6,7 +6,7 @@ export interface BaseModel {
   updateAt?: string;
 }
 
-export type GetFormModel<T> = Omit<T, keyof BaseModel>;  // 排除BaseModel中的id和createAt属性
+export type GetFormModel<T> = Omit<T, keyof BaseModel>; // 排除BaseModel中的id和createAt属性
 
 export interface PageQuery {
   page: number;

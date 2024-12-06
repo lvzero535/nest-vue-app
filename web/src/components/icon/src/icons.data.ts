@@ -18,17 +18,17 @@ export const icons = { 'Ant Design': antDesign, 'Element Plus': ep } as const;
 /**
  * 定义一个类型 DefaultIconsType，它是 antDesign 图标集合中图标的键的联合类型
  */
-export type DefaultIconsType = 
-  `ant-design:${keyof typeof antDesign.icons}`
-  |`ep:${keyof typeof ep.icons}`;
+export type DefaultIconsType =
+  | `ant-design:${keyof typeof antDesign.icons}`
+  | `ep:${keyof typeof ep.icons}`;
 
 /**
  * 定义一个函数 setupIcons，用于将所有导入的图标集合添加到应用程序中
  */
 export function setupIcons() {
   // 遍历 icons 对象中的所有值
-  Object.values(icons).forEach(item => {
+  Object.values(icons).forEach((item) => {
     // 将当前遍历到的图标集合添加到应用程序中
-    addCollection(item)
-  })
+    addCollection(item);
+  });
 }

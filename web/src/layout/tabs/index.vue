@@ -1,11 +1,13 @@
 <template>
   <div class="tabs-container">
-    <Tabs type="editable-card"
+    <Tabs
+      type="editable-card"
       hideAdd
       @edit="handleEdit"
       :active-key="route.path"
-      @change="handleChange">
-      <Tabs.TabPane v-for="menu in tabsList" :key="menu.path" >
+      @change="handleChange"
+    >
+      <Tabs.TabPane v-for="menu in tabsList" :key="menu.path">
         <template #tab>
           <Operator :menu="menu" />
         </template>
@@ -30,21 +32,20 @@ const tabsList = computed(() => Array.from(tabsStore.tabsMap.values()) || []);
 
 const handleEdit: TabsProps['onEdit'] = (path, action) => {
   action === 'remove' && tabsStore.removeTabs(path as string);
-}
+};
 const handleChange: TabsProps['onChange'] = (path) => {
   if (route.path === path) {
     return;
   }
   router.push({ path: path as string });
-}
-
+};
 </script>
 <style lang="less" scoped>
 .tabs-container {
   background: #fff;
   border-top: 1px solid #e8e8e8;
   border-bottom: 1px solid #e8e8e8;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
   padding: 4px 12px;
 
   .ant-tabs {

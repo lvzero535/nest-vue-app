@@ -1,9 +1,9 @@
-import { RouteRecordRaw } from "vue-router";
-import { outsideLayoutRoutes } from "./outsideLayout";
-import { diagram, welcome } from "./dashboard";
-import { basicFormRoute, dynamicFormRoute, modal } from "./demos";
-import { demoItemsRoute } from "./demos-items";
-import { roleRoute, userRoute } from "./system";
+import { RouteRecordRaw } from 'vue-router';
+import { outsideLayoutRoutes } from './outsideLayout';
+import { diagram, welcome } from './dashboard';
+import { basicFormRoute, dynamicFormRoute, modal } from './demos';
+import { demoItemsRoute } from './demos-items';
+import { roleRoute, userRoute } from './system';
 
 export const rootRoute: RouteRecordRaw = {
   path: '/',
@@ -21,10 +21,7 @@ export const rootRoute: RouteRecordRaw = {
         title: 'Dashboard',
         icon: 'ant-design:home-outlined',
       },
-      children: [
-        welcome,
-        diagram,
-      ]
+      children: [welcome, diagram],
     },
     {
       path: '/demos',
@@ -42,13 +39,10 @@ export const rootRoute: RouteRecordRaw = {
             title: 'Form演示',
             icon: 'ant-design:account-book-outlined',
           },
-          children: [
-            basicFormRoute,
-            dynamicFormRoute,
-          ]
+          children: [basicFormRoute, dynamicFormRoute],
         },
         demoItemsRoute,
-      ]
+      ],
     },
     {
       path: '/system',
@@ -57,20 +51,16 @@ export const rootRoute: RouteRecordRaw = {
         title: '系统管理',
         icon: 'ep:setting',
       },
-      children: [
-        userRoute,
-        roleRoute,
-      ]
+      children: [userRoute, roleRoute],
     },
-  ]
-}
-
+  ],
+};
 
 export const routes: RouteRecordRaw[] = [
   rootRoute,
   ...outsideLayoutRoutes,
   {
     path: '/:pathMatch(.*)*',
-    component: () => import('@/views/error/NotFound.vue')
-  }
-]
+    component: () => import('@/views/error/NotFound.vue'),
+  },
+];

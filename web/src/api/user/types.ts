@@ -1,4 +1,4 @@
-import { BaseModel, GetFormModel } from "../types";
+import { BaseModel, GetFormModel } from '../types';
 
 export interface UserModel extends BaseModel {
   username: string;

@@ -23,22 +23,22 @@ import { RouteRecordRaw } from 'vue-router';
 import MenuContent from './MenuContent.vue';
 
 defineOptions({
-  name: 'MySubMenuItem'
-})
+  name: 'MySubMenuItem',
+});
 
 defineProps({
   menu: {
     type: Object as PropType<RouteRecordRaw>,
-    default: () => ({})
+    default: () => ({}),
   },
   /* 当折叠时，第1级菜单隐藏文字 只显示 */
   hideText: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
 const hasChildren = (menu: RouteRecordRaw) => {
-  return !isEmpty(menu.children)
-}
+  return !isEmpty(menu.children);
+};
 </script>

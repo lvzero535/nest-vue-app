@@ -6,7 +6,7 @@
         <MenuContent :menu="menu" />
       </div>
       <template #overlay>
-        <Menu :items="items" @click="onMenuClick"/>
+        <Menu :items="items" @click="onMenuClick" />
       </template>
     </Dropdown>
   </div>
@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { Dropdown, Menu, MenuProps } from 'ant-design-vue';
 import MenuContent from '../menu/MenuContent.vue';
-import {  PropType, ref } from 'vue';
+import { PropType, ref } from 'vue';
 import { RouteRecordRaw } from 'vue-router';
 import { hIcon } from '@/components/icon';
 import { TAB_ACTIONS, useTabsStore } from '@/store/modules/tabs';
@@ -23,7 +23,7 @@ import { isFunction } from 'lodash-es';
 const props = defineProps({
   menu: {
     type: Object as PropType<RouteRecordRaw>,
-    default: () => ({})
+    default: () => ({}),
   },
 });
 
@@ -35,7 +35,7 @@ const onMenuClick: MenuProps['onClick'] = (options) => {
   } else {
     tabsStore.closeTabs(options.key as TAB_ACTIONS, props.menu.path);
   }
-}
+};
 
 const items = ref([
   {
@@ -45,7 +45,7 @@ const items = ref([
     title: '刷新当前',
     handler() {
       console.log('刷新当前');
-    }
+    },
   },
   {
     key: TAB_ACTIONS.CLOSE_ALL,
@@ -72,5 +72,4 @@ const items = ref([
     title: '关闭右边',
   },
 ]);
-
 </script>

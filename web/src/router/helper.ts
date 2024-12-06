@@ -1,4 +1,4 @@
-import router from "@/router";
+import router from '@/router';
 
 /**
  * 根据路径获取路由对象
@@ -11,5 +11,5 @@ export function getRouteByPath(path: string) {
   // 获取所有路由配置
   const routes = router.getRoutes();
   // 在路由配置中查找路径匹配的路由对象
-  return routes.find(item => item.path === path);
+  return routes.find((item) => item.path === path);
 }

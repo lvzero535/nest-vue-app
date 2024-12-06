@@ -1,5 +1,5 @@
-import { JSX } from "vue/jsx-runtime";
-import { ModalProps, SpinProps } from "ant-design-vue";
+import { JSX } from 'vue/jsx-runtime';
+import { ModalProps, SpinProps } from 'ant-design-vue';
 
 export interface ModalExtra extends ModalProps {
   _isConfirmLoading?: boolean;
